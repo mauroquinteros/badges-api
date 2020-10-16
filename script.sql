@@ -1,0 +1,21 @@
+CREATE TABLE jobs(
+  id_job INT(11) NOT NULL PRIMARY KEY,
+  job_title VARCHAR(255) NOT NULL
+);
+
+ALTER TABLE jobs
+  MODIFY id_job INT(11) NOT NUlL AUTO_INCREMENT, AUTO_INCREMENT = 1;
+
+CREATE TABLE attendants(
+  id_attendant INT(11) NOT NULL PRIMARY KEY,
+  first_name VARCHAR(100) NOT NULL,
+  last_name VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  twitter_user VARCHAR(150) NOT NULL,
+  profile_picture VARCHAR(255) NOT NULL,
+  id_job INT(11) NOT NULL,
+  FOREIGN KEY id_job REFERENCES jobs(id_job)
+);
+
+ALTER TABLE attendants
+  MODIFY id_attendant INT(11) NOT NUlL AUTO_INCREMENT, AUTO_INCREMENT = 1;
