@@ -1,4 +1,4 @@
-const {database, port} = require('./index')
+const {database} = require('./index')
 const mysql = require('mysql')
 
 const pool = mysql.createPool({
@@ -9,7 +9,7 @@ const pool = mysql.createPool({
   database: database.DATABASE
 })
 
-const promisify = async function(query, params) {
+const promisify = async function(query, params = []) {
   return new Promise((resolve, reject) => {
     pool.query(query, params, (error, result) => {
       if(error)

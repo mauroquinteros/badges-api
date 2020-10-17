@@ -19,3 +19,24 @@ CREATE TABLE attendants(
 
 ALTER TABLE attendants
   MODIFY id_attendant INT(11) NOT NUlL AUTO_INCREMENT, AUTO_INCREMENT = 1;
+
+
+-- Insert data to jobs table
+INSERT INTO jobs(job_title)
+VALUES ('Frontend Developer'),
+       ('Backend Developer'),
+       ('Full Stack Developer'),
+       ('Data Scientist');
+
+-- Reset the auto increment key
+ALTER TABLE jobs AUTO_INCREMENT = 1
+
+
+-- Insert data to attendants table
+INSERT INTO attendants (first_name, last_name, email, twitter_user, profile_picture, id_job)
+VALUES ('Mauro', 'Quinteros', 'quinterosmauro@e-quipu.pe', 'mauroquinteros', NULL, 1),
+       ('Anny', 'Reyna', 'angiereyna@gmail.com', 'angiereyna', NULL, 2),
+       ('Esteban', 'Leonidas', 'leonidasesteban@gmail.com', 'leonidasesteban', NULL, 1);
+
+-- Reset the auto increment key
+ALTER TABLE attendants AUTO_INCREMENT = 1
