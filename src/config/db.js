@@ -13,7 +13,7 @@ const promisify = async function(query, params = []) {
   return new Promise((resolve, reject) => {
     pool.query(query, params, (error, result) => {
       if(error)
-        reject(error.message)
+        reject(error)
       resolve(result)
     })
   })
