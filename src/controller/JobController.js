@@ -66,6 +66,51 @@ class JobController {
       })
     }
   }
+
+  static async editJob(req, res) {
+    try {
+      const {jobTitle} = req.body
+      const {id} = req.params
+      const {affectedRows} = await Job.editJob(jobTitle, id)
+      if(affectedRows) {
+        res.json({
+          success: true,
+          message: 'Job updated successfully!',
+          idJob: id
+        })
+      }
+    } catch (error) {
+      res.status(500).json({
+        error: true,
+        message: error.message
+      })
+    }
+  }
+
+  static async deleteJob(req, res) {
+    try {
+      const {id} = req.params
+      const {affectedRows} = await Job.deleteJob(id)
+      if(affectedRows) {
+        res.json({
+          success: true,
+          message: 'Job deleted successfully!',
+          idJob: id
+        })
+      } else {
+        res.json({
+          success: true,
+          message: 'This job does not exist!',
+          idJob: id
+        })
+      }
+    } catch (error) {
+      res.status(500).json({
+        error: true,
+        message: error.message
+      })
+    }
+  }
 }
 
 module.exports = JobController

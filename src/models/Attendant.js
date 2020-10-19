@@ -50,6 +50,39 @@ class Attendant {
       throw error
     }
   }
+
+  static async editAttendant(...values) {
+    try {
+      const query = `UPDATE ${this.tableName} SET ${this.firstNameLabel} = ?, ${this.lastNameLabel} = ?, ${this.emailLabel} = ?, ${this.twitterUserLabel} = ?, ${this.profilePictureLabel} = ?, ${this.idJobLabel} = ? WHERE ${this.idAttendantLabel} = ?`
+      const params = [...values]
+      const result = await pool.query(query, params)
+      return result
+    } catch (error) {
+      throw error
+    }
+  }
+
+  static async deleteAttendant(id) {
+    try {
+      const query = `DELETE FROM ${this.tableName} WHERE ${this.idAttendantLabel} = ?`
+      const params = [id]
+      const result = await pool.query(query, params)
+      return result
+    } catch (error) {
+      throw error
+    }
+  }
+
+  static async deleteAttendantByJob(id) {
+    try {
+      const query = `DELETE FROM ${this.tableName} WHERE ${this.idJobLabel} = ?`
+      const params = [id]
+      const result = await pool.query(query, params)
+      return result
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 module.exports = Attendant

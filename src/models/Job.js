@@ -1,4 +1,5 @@
 const pool = require('../config/db')
+const Attendant = require('./Attendant')
 
 class Job {
   static tableName = 'jobs'
@@ -32,6 +33,33 @@ class Job {
       const params = [...values]
       const result = await pool.query(query, params)
       return result
+    } catch (error) {
+      throw error
+    }
+  }
+
+  static async editJob(...values) {
+    try {
+      const query = `UPDATE ${this.tableName} SET ${this.jobTitleLabel} = ? WHERE ${this.idJobLabel} = ?`
+      const params = [...values]
+      const result = await pool.query(query, params)
+      return result
+    } catch (error) {
+      throw error
+    }
+  }
+
+  static async deleteJob(id) {
+    try {
+      const {affectedRows} = await Attendant.deleteAttendantByJob(id)
+      if(affectedRows) {
+        const query = `DELETE FROM ${this.tableName} WHERE ${this.idJobLabel} = ?`
+        const params = [id]
+        const result = await pool.query(query, params)
+        return result
+      } else {
+        throw new Error('Cannot delete the job because it is a constraint key in a attendant rows or the Job does not exist')
+      }
     } catch (error) {
       throw error
     }

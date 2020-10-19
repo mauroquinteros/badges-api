@@ -1,4 +1,5 @@
 const Attendant = require("../models/Attendant");
+const Job = require("../models/Job");
 
 class AttendantController {
   static async getAttendants(req, res) {
@@ -72,6 +73,67 @@ class AttendantController {
           message: "Attendant added successfully",
           idAttendant: insertId,
         });
+      }
+    } catch (error) {
+      res.status(500).json({
+        error: true,
+        message: error.message,
+      });
+    }
+  }
+
+  static async editAttendant(req, res) {
+    try {
+      const {
+        firstName,
+        lastName,
+        email,
+        twitterUser,
+        profilePicture,
+        idJob,
+      } = req.body;
+      const {id} = req.params
+      const {affectedRows} = await Attendant.editAttendant(
+        firstName,
+        lastName,
+        email,
+        twitterUser,
+        profilePicture,
+        idJob,
+        id
+      )
+      if(affectedRows) {
+        res.json({
+          success: true,
+          message: 'Attendant updated successfully!',
+          idAttendant: id
+        })
+      }
+    } catch (error) {
+      res.status(500).json({
+        error: true,
+        message: error.message,
+      });
+    }
+  }
+
+  static async deleteAttendant(req, res) {
+    try {
+      const {id} = req.params
+      const {affectedRows} = await Attendant.deleteAttendant(id)
+      console.log(affectedRows)
+      if(affectedRows) {
+        res.json({
+          success: true,
+          message: 'Attendant deleted successfully!',
+          idAttendant: id
+        })
+      } else {
+        res.json({
+          success: true,
+          message: 'This attendant does not exist!',
+          idAttendant: id
+        })
       }
     } catch (error) {
       res.status(500).json({
