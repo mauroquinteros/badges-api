@@ -12,7 +12,7 @@ CREATE TABLE attendants(
   last_name VARCHAR(100) NOT NULL,
   email VARCHAR(100) NOT NULL,
   twitter_user VARCHAR(150) NOT NULL,
-  profile_picture VARCHAR(255) NOT NULL,
+  avatar_url VARCHAR(255) NOT NULL,
   id_job INT(11) NOT NULL,
   FOREIGN KEY id_job REFERENCES jobs(id_job)
 );
@@ -33,7 +33,7 @@ ALTER TABLE jobs AUTO_INCREMENT = 1
 
 
 -- Insert data to attendants table
-INSERT INTO attendants (first_name, last_name, email, twitter_user, profile_picture, id_job)
+INSERT INTO attendants (first_name, last_name, email, twitter_user, avatar_url, id_job)
 VALUES ('Mauro', 'Quinteros', 'quinterosmauro@e-quipu.pe', 'mauroquinteros', NULL, 1),
        ('Anny', 'Reyna', 'angiereyna@gmail.com', 'angiereyna', NULL, 2),
        ('Esteban', 'Leonidas', 'leonidasesteban@gmail.com', 'leonidasesteban', NULL, 1);

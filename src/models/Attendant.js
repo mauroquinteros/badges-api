@@ -1,19 +1,18 @@
 const pool = require("../config/db");
-const Job = require("../models/Job");
 
 class Attendant {
-  static tableName = "attendants";
-  static idAttendantLabel = "id_attendant";
-  static firstNameLabel = "first_name";
-  static lastNameLabel = "last_name";
-  static emailLabel = "email";
-  static twitterUserLabel = "twitter_user";
-  static profilePictureLabel = "profile_picture";
-  static idJobLabel = "id_job";
+  static table = "attendants";
+  static id_attendant = "id_attendant";
+  static first_name = "first_name";
+  static last_name = "last_name";
+  static email = "email";
+  static twitter_user = "twitter_user";
+  static avatar_url = "avatar_url";
+  static id_job = "id_job";
 
   static async getAttendants() {
     try {
-      const query = `SELECT * FROM ${this.tableName}`;
+      const query = `SELECT * FROM ${this.table}`;
       const result = await pool.query(query);
       return result;
     } catch (error) {
@@ -23,7 +22,7 @@ class Attendant {
 
   static async getAttendantById(id) {
     try {
-      const query = `SELECT * FROM ${this.tableName} WHERE ${this.idAttendantLabel} = ?`;
+      const query = `SELECT * FROM ${this.table} WHERE ${this.id_attendant} = ?`;
       const params = [id];
       const result = await pool.query(query, params);
       return result;
@@ -34,18 +33,10 @@ class Attendant {
 
   static async createAttendant(...values) {
     try {
-      const idJob = values[values.length - 1];
-      const result = await Job.getJobById(idJob);
-
-      // Validate if the job id exists
-      if (result.length > 0) {
-        const query = `INSERT INTO ${this.tableName}(${this.firstNameLabel}, ${this.lastNameLabel}, ${this.emailLabel}, ${this.twitterUserLabel}, ${this.profilePictureLabel}, ${this.idJobLabel}) VALUES(?, ?, ?, ?, ?, ?)`;
-        const params = [...values];
-        const result = await pool.query(query, params);
-        return result;
-      } else {
-        throw new Error(`the id_job that are you trying to add doesn't exist`);
-      }
+      const query = `INSERT INTO ${this.table}(${this.first_name}, ${this.last_name}, ${this.email}, ${this.twitter_user}, ${this.avatar_url}, ${this.id_job}) VALUES(?, ?, ?, ?, ?, ?)`;
+      const params = [...values];
+      const result = await pool.query(query, params);
+      return result;
     } catch (error) {
       throw error;
     }
@@ -53,7 +44,7 @@ class Attendant {
 
   static async editAttendant(...values) {
     try {
-      const query = `UPDATE ${this.tableName} SET ${this.firstNameLabel} = ?, ${this.lastNameLabel} = ?, ${this.emailLabel} = ?, ${this.twitterUserLabel} = ?, ${this.profilePictureLabel} = ?, ${this.idJobLabel} = ? WHERE ${this.idAttendantLabel} = ?`;
+      const query = `UPDATE ${this.table} SET ${this.first_name} = ?, ${this.last_name} = ?, ${this.email} = ?, ${this.twitter_user} = ?, ${this.avatar_url} = ?, ${this.id_job} = ? WHERE ${this.id_attendant} = ?`;
       const params = [...values];
       const result = await pool.query(query, params);
       return result;
@@ -64,7 +55,7 @@ class Attendant {
 
   static async deleteAttendant(id) {
     try {
-      const query = `DELETE FROM ${this.tableName} WHERE ${this.idAttendantLabel} = ?`;
+      const query = `DELETE FROM ${this.table} WHERE ${this.id_attendant} = ?`;
       const params = [id];
       const result = await pool.query(query, params);
       return result;
@@ -75,7 +66,7 @@ class Attendant {
 
   static async deleteAttendantByJob(id) {
     try {
-      const query = `DELETE FROM ${this.tableName} WHERE ${this.idJobLabel} = ?`;
+      const query = `DELETE FROM ${this.table} WHERE ${this.id_job} = ?`;
       const params = [id];
       const result = await pool.query(query, params);
       return result;

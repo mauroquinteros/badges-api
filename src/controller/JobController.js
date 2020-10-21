@@ -1,4 +1,5 @@
 const Job = require("../models/Job");
+const Attendant = require("../models/Attendant");
 
 class JobController {
   static async getJobs(req, res) {
@@ -50,8 +51,8 @@ class JobController {
 
   static async createJob(req, res) {
     try {
-      const { jobTitle } = req.body;
-      const { affectedRows, insertId } = await Job.createJob(jobTitle);
+      const { job_title } = req.body;
+      const { affectedRows, insertId } = await Job.createJob(job_title);
       if (affectedRows) {
         res.json({
           success: true,
@@ -69,9 +70,9 @@ class JobController {
 
   static async editJob(req, res) {
     try {
-      const { jobTitle } = req.body;
+      const { job_title } = req.body;
       const { id } = req.params;
-      const { affectedRows } = await Job.editJob(jobTitle, id);
+      const { affectedRows } = await Job.editJob(job_title, id);
       if (affectedRows) {
         res.json({
           success: true,
@@ -80,7 +81,7 @@ class JobController {
         });
       } else {
         res.json({
-          success: true,
+          error: true,
           message: `No hay ningun trabajo con el ID ${id}`,
           idJob: id,
         });
@@ -96,6 +97,7 @@ class JobController {
   static async deleteJob(req, res) {
     try {
       const { id } = req.params;
+      await Attendant.deleteAttendantByJob(id);
       const { affectedRows } = await Job.deleteJob(id);
       if (affectedRows) {
         res.json({
@@ -105,7 +107,7 @@ class JobController {
         });
       } else {
         res.json({
-          success: true,
+          error: true,
           message: `El trabajo con el ID ${id} no existe!`,
           idJob: id,
         });
