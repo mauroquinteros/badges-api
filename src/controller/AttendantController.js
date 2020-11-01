@@ -2,16 +2,18 @@ const Attendant = require("../models/Attendant");
 const Job = require("../models/Job");
 
 // Utils
-const { convertAvatar } = require("../utils/");
+const { convertAvatar, getAttendatsJson } = require("../utils/");
 
 class AttendantController {
   static async getAttendants(req, res) {
     try {
       const result = await Attendant.getAttendants();
       if (result.length > 0) {
+        const jobs = await Job.getJobs();
+        const data = getAttendatsJson(result, jobs);
         res.json({
           success: true,
-          data: result,
+          data,
         });
       } else {
         res.json({
