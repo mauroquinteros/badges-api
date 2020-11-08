@@ -2,7 +2,7 @@ const Attendant = require("../models/Attendant");
 const Job = require("../models/Job");
 
 // Utils
-const { convertAvatar, getAttendatsJson } = require("../utils/");
+const { convertAvatar, convertAttendatToJson } = require("../utils/");
 
 class AttendantController {
   static async getAttendants(req, res) {
@@ -10,7 +10,7 @@ class AttendantController {
       const result = await Attendant.getAttendants();
       if (result.length > 0) {
         const jobs = await Job.getJobs();
-        const data = getAttendatsJson(result, jobs);
+        const data = convertAttendatToJson(result, jobs);
         res.json({
           success: true,
           data,
@@ -35,9 +35,11 @@ class AttendantController {
       const { id } = req.params;
       const result = await Attendant.getAttendantById(id);
       if (result.length > 0) {
+        const jobs = await Job.getJobs();
+        const data = convertAttendatToJson(result, jobs)
         res.json({
           success: true,
-          data: result,
+          data,
         });
       } else {
         res.json({

@@ -24,7 +24,7 @@ function deleteProperty(object, prop) {
   return newObject;
 }
 
-function getAttendatsJson(attendants, jobs) {
+function convertAttendatToJson(attendants, jobs) {
   const attendantJson = attendants.map((attendant) => {
     // Find the job that is related to the current attendant
     const job = jobs.find((job) => job.id_job === attendant.id_job);
@@ -42,5 +42,5 @@ function getAttendatsJson(attendants, jobs) {
 
 module.exports = {
   convertAvatar,
-  getAttendatsJson,
+  convertAttendatToJson,
 };
