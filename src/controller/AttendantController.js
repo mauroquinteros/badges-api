@@ -36,7 +36,7 @@ class AttendantController {
       const result = await Attendant.getAttendantById(id);
       if (result.length > 0) {
         const jobs = await Job.getJobs();
-        const data = convertAttendatToJson(result, jobs)
+        const data = convertAttendatToJson(result, jobs);
         res.json({
           success: true,
           data,
@@ -78,9 +78,9 @@ class AttendantController {
           });
         }
       } else {
-        res.json({
+        res.status(500).json({
           error: true,
-          message: `El ID ${id_job} del trabajo que agregaste no existe. No podemos crear al participante!`,
+          message: `El id ${id_job} del trabajo que agregaste no existe. No podemos crear al participante!`,
         });
       }
     } catch (error) {
@@ -114,14 +114,14 @@ class AttendantController {
             idAttendant: id,
           });
         } else {
-          res.json({
+          res.status(500).json({
             error: true,
             message: `No hay ningun participante con el ID ${id}`,
             idAttendant: id,
           });
         }
       } else {
-        res.json({
+        res.status(500).json({
           error: true,
           message: `El ID ${id_job} del trabajo que agregaste no existe. No podemos editar al participante!`,
           idAttendant: id,
@@ -146,7 +146,7 @@ class AttendantController {
           idAttendant: id,
         });
       } else {
-        res.json({
+        res.status(500).json({
           error: true,
           message: `El participante con el ID ${id} no existe!`,
           idAttendant: id,

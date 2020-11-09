@@ -80,7 +80,7 @@ class JobController {
           idJob: id,
         });
       } else {
-        res.json({
+        res.status(500).json({
           error: true,
           message: `No hay ningun trabajo con el ID ${id}`,
           idJob: id,
@@ -106,7 +106,7 @@ class JobController {
           idJob: id,
         });
       } else {
-        res.json({
+        res.status(500).json({
           error: true,
           message: `El trabajo con el ID ${id} no existe!`,
           idJob: id,
